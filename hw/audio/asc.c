@@ -354,12 +354,15 @@ static void asc_out_cb(void *opaque, int free_b)
     }
 
     switch (s->regs[ASC_MODE] & 3) {
-    case 0: /* Off */
+    case 0:
+        /* Off */
         break;
-    case 1: /* FIFO mode */
+    case 1:
+        /* FIFO mode */
         samples = generate_fifo(s, samples);
         break;
-    case 2: /* Wave table mode */
+    case 2:
+        /* Wave table mode (ASC only) */
         samples = generate_wavetable(s, samples);
         break;
     }

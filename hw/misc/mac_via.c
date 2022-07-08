@@ -1001,6 +1001,7 @@ static void mos6522_q800_via1_write(void *opaque, hwaddr addr, uint64_t val,
 {
     MOS6522Q800VIA1State *v1s = MOS6522_Q800_VIA1(opaque);
     MOS6522State *ms = MOS6522(v1s);
+    int state;
 
     addr = (addr >> 9) & 0xf;
 
@@ -1016,6 +1017,18 @@ static void mos6522_q800_via1_write(void *opaque, hwaddr addr, uint64_t val,
 
         v1s->last_b = ms->b;
         break;
+
+    case VIA_REG_SR:
+        state = (ms->b & VIA1B_vADB_StateMask) >> VIA1B_vADB_StateShift;
+
+        /*
+         * If we write to the shift register whilst still in ADB_STATE_NEW
+         * then consider it to be the start of a new command (NetBSD relies
+         * upon this)
+         */
+        if (state == ADB_STATE_NEW && (ms->acr & VIA1ACR_vShiftOut)) {
+            adb_via_send(v1s, state, ms->sr);
+        }
     }
 }
 

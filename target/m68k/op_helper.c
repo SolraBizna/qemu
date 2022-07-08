@@ -289,6 +289,7 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
     uint32_t sp;
     uint32_t vector;
     uint16_t sr, oldsr;
+    gint opcode;
 
     if (!is_hw) {
         switch (cs->exception_index) {
@@ -304,9 +305,22 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
     sr = env->sr | cpu_m68k_get_ccr(env);
     if (qemu_loglevel_mask(CPU_LOG_INT)) {
         static int count;
+
         qemu_log("INT %6d: %s(%#x) pc=%08x sp=%08x sr=%04x\n",
                  ++count, m68k_exception_name(cs->exception_index),
                  vector, env->pc, env->aregs[7], sr);
+
+        /* Some magic for MacOS */
+        if (cs->exception_index == EXCP_LINEA) {
+            opcode = (gint)cpu_lduw_code(env, env->pc);
+
+            const ALine *aline = lookup_alinetrap(env->alinetraps, opcode);
+
+            if (aline) {
+                qemu_log("          : MacOS A-Line %s (%#x)\n",
+                         aline == NULL ? "(Unknown)" : aline->name, opcode);
+            }
+        }
     }
 
     /*

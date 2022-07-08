@@ -7,6 +7,7 @@ m68k_ss.add(files(
   'op_helper.c',
   'softfloat.c',
   'translate.c',
+  'macos_aline.c',
 ))
 
 m68k_softmmu_ss = ss.source_set()

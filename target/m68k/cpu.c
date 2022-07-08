@@ -305,6 +305,9 @@ static void m68k_cpu_initfn(Object *obj)
     M68kCPU *cpu = M68K_CPU(obj);
 
     cpu_set_cpustate_pointers(cpu);
+
+    /* Build A-Line Trap hash table */
+    build_alinetrap_hash(cpu);
 }
 
 #if defined(CONFIG_SOFTMMU)

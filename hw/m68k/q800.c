@@ -659,6 +659,16 @@ static void q800_init(MachineState *machine)
         rom = g_malloc(sizeof(*rom));
         memory_region_init_rom(rom, NULL, "m68k_mac.rom", MACROM_SIZE,
                                &error_abort);
+
+        /* WIP: load Quadra800.elf file for symbols with executing with -d in_asm */
+        filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, "Quadra800ROM.elf");
+        if (filename) {
+            load_elf(filename, NULL, NULL, NULL, &elf_entry, NULL, NULL, NULL,
+                     1, EM_68K, 0, 0);
+            fprintf(stderr, "Loaded Quadra800ROM.elf symbols!\n");
+        }
+        g_free(filename);
+
         filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
         memory_region_add_subregion(get_system_memory(), MACROM_ADDR, rom);
 

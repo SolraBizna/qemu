@@ -177,4 +177,7 @@ config LASI
 config DJMEMC
     bool
 
+config IOSB
+    bool
+
 source macio/Kconfig

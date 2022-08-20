@@ -542,7 +542,7 @@ enum m68k_features {
     M68K_FEATURE_TRAPCC,
 };
 
-static inline int m68k_feature(CPUM68KState *env, int feature)
+static inline uint64_t m68k_feature(CPUM68KState *env, int feature)
 {
     return (env->features & (1u << feature)) != 0;
 }

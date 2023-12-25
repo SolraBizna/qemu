@@ -34,6 +34,7 @@ system_ss.add(when: 'CONFIG_SM501', if_true: files('sm501.c'))
 system_ss.add(when: 'CONFIG_TCX', if_true: files('tcx.c'))
 system_ss.add(when: 'CONFIG_CG3', if_true: files('cg3.c'))
 system_ss.add(when: 'CONFIG_MACFB', if_true: files('macfb.c'))
+system_ss.add(when: 'CONFIG_MAC_QFB', if_true: files('mac_qfb.c'))
 system_ss.add(when: 'CONFIG_NEXTCUBE', if_true: files('next-fb.c'))
 
 system_ss.add(when: 'CONFIG_VGA', if_true: files('vga.c'))

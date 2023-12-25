@@ -2721,6 +2721,12 @@ F: hw/hyperv/hv-balloon*.h
 F: include/hw/hyperv/dynmem-proto.h
 F: include/hw/hyperv/hv-balloon.h
 
+mac-qfb
+M: Solra Bizna <solra@bizna.name>
+S: Odd Fixes
+F: hw/m68k/mac_qfb.c
+F: include/hw/m68k/mac_qfb.h
+
 Subsystems
 ----------
 Overall Audio backends

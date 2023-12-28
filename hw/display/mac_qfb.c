@@ -699,9 +699,9 @@ static void qfb_try_patch_decl_rom(MemoryRegion *rom, QfbState *ms)
         while(offset > 0) {
             record_addr = qfb_ptr_read_u32(ptr + offset);
             if(record_addr == 0) break;
-            qfb_patch_sresource(ms, ptr, record_addr, size);
             /* (safe to downcast size here because we've already checked it
                against the 32-bit size stored in the format header block) */
+            qfb_patch_sresource(ms, ptr, record_addr, size);
             offset -= 4;
         }
     }
